@@ -1,10 +1,17 @@
-import React from 'react'
+import React from 'react';
 
-function button() {
+function Button({ title, id, leftIcon, containerClass }) {
   return (
-    <div>
-    </div>
-  )
+    <button
+      id={id}
+      className={`group relative z-30 w-fit cursor-pointer overflow-hidden mt-5 rounded-lg px-7 py-3 text-black ${containerClass}`}
+    >
+      {leftIcon} {title}
+
+      
+    </button>
+
+  );
 }
 
-export default button
+export default Button;
