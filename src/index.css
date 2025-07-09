@@ -185,4 +185,17 @@ body {
   }
 }
 
- 
+ /* .mask-clip-path {
+  clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+  overflow: hidden;
+} */
+
+
+/* Global CSS mein add karo */
+#clip {
+  border: 2px dashed red !important; /* Debug border */
+}
+
+#about {
+  overflow: visible !important;
+}
