@@ -39,67 +39,65 @@ export default function Hero() {
   };
 
   useGSAP(() => {
-    if (hasClicked) {
-      const next = nextVideoRef.current;
-      const current = currentVideoRef.current;
+    const ctx = gsap.context(() => {
+      // 👉 Animation #1: Mini video click
+      if (hasClicked) {
+        const next = nextVideoRef.current;
+        const current = currentVideoRef.current;
 
-      if (next && current) {
-        gsap.set(next, { visibility: "visible", scale: 0 });
+        if (next && current) {
+          gsap.set(next, { visibility: "visible", scale: 0 });
 
-        gsap.to(next, {
-          transformOrigin: "center center",
-          scale: 1,
-          duration: 1,
+          gsap.to(next, {
+            transformOrigin: "center center",
+            scale: 1,
+            duration: 1,
+            ease: "power1.inOut",
+            onStart: () => next.play(),
+            onComplete: () => {
+              setCurrentIndex(upcomingVideoIndex);
+              gsap.set(next, { visibility: "hidden" });
+              ScrollTrigger.refresh();
+              setHasClicked(false);
+            },
+          });
+
+          gsap.to(current, {
+            transformOrigin: "center center",
+            scale: 0,
+            duration: 1,
+            ease: "power1.inOut",
+          });
+        }
+      }
+
+      // 👉 Animation #2: ScrollTrigger for #video-frame
+      if (!loading) {
+        gsap.set("#video-frame", {
+          clipPath: "polygon(14% 0, 72% 0, 88% 90%, 0 95%)",
+          borderRadius: "0% 0% 40% 10%",
+        });
+
+        gsap.from("#video-frame", {
+          clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+          borderRadius: "0% 0% 0% 0%",
           ease: "power1.inOut",
-          onStart: () => next.play(),
-          onComplete: () => {
-            setCurrentIndex(upcomingVideoIndex);
-            gsap.set(next, { visibility: "hidden" });
-            ScrollTrigger.refresh();
-            setHasClicked(false);
+          scrollTrigger: {
+            trigger: "#video-frame",
+            start: "center center",
+            end: "bottom center",
+            scrub: true,
+            markers: true,
           },
         });
 
-        gsap.to(current, {
-          transformOrigin: "center center",
-          scale: 0,
-          duration: 1,
-          ease: "power1.inOut",
-        });
+        ScrollTrigger.refresh();
       }
-    }
-  }, [hasClicked, currentIndex]);
+    });
 
-  useEffect(() => {
-    const current = currentVideoRef.current;
-    if (current) {
-      gsap.set(current, { scale: 1 });
-    }
-  }, [currentIndex]);
+    return () => ctx.revert(); // ✅ ye sab kill karega safe
+  }, [hasClicked, loading, currentIndex]);
 
-  useGSAP(() => {
-    if (!loading) {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-      gsap.set("#video-frame", {
-        clipPath: "polygon(14% 0, 72% 0, 88% 90%, 0 95%)",
-        borderRadius: "0% 0% 40% 10%",
-      });
-
-      gsap.from("#video-frame", {
-        clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-        borderRadius: "0% 0% 0% 0%",
-        ease: "power1.inOut",
-        scrollTrigger: {
-          trigger: "#video-frame",
-          start: "center center",
-          end: "bottom center",
-          scrub: true,
-        },
-      });
-
-      ScrollTrigger.refresh();
-    }
-  }, [loading, currentIndex]);
 
   return (
     <div className="relative h-dvh w-screen overflow-hidden bg-blue-75">

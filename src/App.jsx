@@ -1,6 +1,7 @@
 import React from 'react'
 import Hero from './components/hero.jsx'
 import About from './components/about.jsx'
+// import './index.css'
 function App() {
   return (
     <main className='relative min-h-screen w-screen overflow-x'>

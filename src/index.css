@@ -185,17 +185,36 @@ body {
   }
 }
 
- /* .mask-clip-path {
+/* .mask-clip-path {
   clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
   overflow: hidden;
 } */
 
+/* #clips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+} */
 
-/* Global CSS mein add karo */
-#clip {
-  border: 2px dashed red !important; /* Debug border */
+/* .about-image {
+  width: 40vw !important;
+  height: 60vh !important;
+
+  border-radius: 20px !important;
+  position: relative !important;
+  overflow: hidden !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
 }
 
-#about {
-  overflow: visible !important;
-}
+.about-image img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+} */
