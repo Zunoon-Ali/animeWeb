@@ -1,13 +1,15 @@
 import React from 'react'
 import Hero from './components/hero.jsx'
 import About from './components/about.jsx'
-// import './index.css'
+import Navbar from './components/navbar.jsx'
+import Feature from './components/Feature.jsx'
 function App() {
   return (
-    <main className='relative min-h-screen w-screen overflow-x'>
+    <main className='relative min-h-screen w-screen overflow-x bg-blue-75'>
+      <Navbar />
       < Hero />
       <About />
-      <section className='bg-blue-500 min-h-screen z-0' />
+      <Feature />
     </main>
   )
 }

@@ -19,59 +19,10 @@ export default function Hero() {
   const nextVideoRef = useRef(null);
   const currentVideoRef = useRef(null);
 
-  const getVideoSrc = (index) => `/videos/hero-${index}.mp4`;
-  const upcomingVideoIndex = (currentIndex % 4) + 1;
 
-  const handleVideoLoad = () => {
-    if (loading) {
-      setLoadedVideos((prev) => prev + 1);
-    }
-  };
-
-  useEffect(() => {
-    if (loadedVideos >= totalVideos) {
-      setLoading(false);
-    }
-  }, [loadedVideos]);
-
-  const handleMiniVideoClick = () => {
-    setHasClicked(true);
-  };
 
   useGSAP(() => {
     const ctx = gsap.context(() => {
-      // 👉 Animation #1: Mini video click
-      if (hasClicked) {
-        const next = nextVideoRef.current;
-        const current = currentVideoRef.current;
-
-        if (next && current) {
-          gsap.set(next, { visibility: "visible", scale: 0 });
-
-          gsap.to(next, {
-            transformOrigin: "center center",
-            scale: 1,
-            duration: 1,
-            ease: "power1.inOut",
-            onStart: () => next.play(),
-            onComplete: () => {
-              setCurrentIndex(upcomingVideoIndex);
-              gsap.set(next, { visibility: "hidden" });
-              ScrollTrigger.refresh();
-              setHasClicked(false);
-            },
-          });
-
-          gsap.to(current, {
-            transformOrigin: "center center",
-            scale: 0,
-            duration: 1,
-            ease: "power1.inOut",
-          });
-        }
-      }
-
-      // 👉 Animation #2: ScrollTrigger for #video-frame
       if (!loading) {
         gsap.set("#video-frame", {
           clipPath: "polygon(14% 0, 72% 0, 88% 90%, 0 95%)",
@@ -87,7 +38,6 @@ export default function Hero() {
             start: "center center",
             end: "bottom center",
             scrub: true,
-            markers: true,
           },
         });
 
@@ -95,8 +45,83 @@ export default function Hero() {
       }
     });
 
-    return () => ctx.revert(); // ✅ ye sab kill karega safe
-  }, [hasClicked, loading, currentIndex]);
+    return () => ctx.revert();
+  }, [loading]); // ✅ Sirf loading pe chale
+
+  // const handleMiniVideoClick = () => {
+  //   const next = nextVideoRef.current;
+  //   const current = currentVideoRef.current;
+
+  //   if (next && current) {
+  //     gsap.set(next, { visibility: "visible", scale: 0 });
+
+  //     gsap.to(next, {
+  //       transformOrigin: "center center",
+  //       scale: 1,
+  //       duration: 1,
+  //       ease: "power1.inOut",
+  //       onStart: () => next.play(),
+  //       onComplete: () => {
+  //         setCurrentIndex(upcomingVideoIndex);
+  //         gsap.set(current, { scale: 1 }); // ⭐️ This keeps it visible
+  //         gsap.set(next, { visibility: "hidden" });
+  //         ScrollTrigger.refresh();
+  //       }
+  //     });
+
+  //     gsap.to(current, {
+  //       transformOrigin: "center center",
+  //       scale: 0,
+  //       duration: 1,
+  //       ease: "power2.inOut",
+  //     });
+  //   }
+  // };
+
+  const handleMiniVideoClick = () => {
+    const next = nextVideoRef.current;
+
+    if (next) {
+      gsap.set(next, { visibility: "visible", scale: 0, zIndex: 20 });
+
+      gsap.to(next, {
+        transformOrigin: "center center",
+        scale: 1,
+        opacity: 1,
+        duration: 1,
+        ease: "power1.inOut",
+        onStart: () => next.play(),
+        onComplete: () => {
+          setCurrentIndex(upcomingVideoIndex);
+          gsap.set(next, { visibility: "hidden", zIndex: 5 });
+          ScrollTrigger.refresh();
+        }
+      });
+    }
+  };
+
+  useEffect(() => {
+    const current = currentVideoRef.current;
+    if (current) {
+      gsap.set(current, { scale: 1 });
+    }
+  }, [currentIndex]);
+
+  useEffect(() => {
+    if (loadedVideos >= totalVideos) {
+      setLoading(false);
+    }
+  }, [loadedVideos]);
+
+
+  const getVideoSrc = (index) => `/videos/hero-${index}.mp4`;
+  const upcomingVideoIndex = (currentIndex % 4) + 1;
+
+  const handleVideoLoad = () => {
+    if (loading) {
+      setLoadedVideos((prev) => prev + 1);
+    }
+  };
 
 
   return (
@@ -145,7 +170,7 @@ export default function Hero() {
         autoPlay
         loop
         muted
-        className="absolute top-0 left-0 w-full h-full object-cover z-5"
+        className="absolute top-0 left-0 w-full h-full object-cover z-"
         style={{ visibility: "hidden" }}
         onLoadedData={handleVideoLoad}
       />
@@ -179,7 +204,7 @@ export default function Hero() {
           id="watch-trailer"
           title="Watch Trailer"
           leftIcon={<TiLocationArrow />}
-          containerClass="!bg-yellow-300 flex items-center justify-center gap-2"
+          containerClass="!bg-yellow-300 flex items-center justify-center gap-2 mt-5 px-7 py-3"
         />
       </div>
     </div>
