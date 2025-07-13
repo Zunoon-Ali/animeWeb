@@ -47,7 +47,8 @@ export default function AnimatedTitle({ title, containerClass }) {
                     {line.split(' ').map((word, i) => (
                         <span
                             key={i}
-                            className="animated-word inline-block"
+                            className="animated-word inline-block tracking-widest text-[2rem]
+                            md:text-[3rem] lg:text-[4rem] font-bold text-zentry"
                             dangerouslySetInnerHTML={{ __html: word }}
                         />
                     ))}
