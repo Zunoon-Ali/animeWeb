@@ -11,11 +11,11 @@ function App() {
   return (
     <main className='relative min-h-screen w-screen overflow-x bg-blue-75'>
       <Navbar />
-      < Hero />
+      <Hero />
       <About />
       <Feature />
       <Story />
-      < Contact />
+      <Contact />
       <Footer />
     </main>
   )
