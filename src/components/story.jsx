@@ -3,7 +3,7 @@ import { useRef } from "react";
 
 import Button from "./Button";
 import AnimatedTitle from "./AnimatedTitle";
-import RoundedCorner from "./roundedCorner";
+import RoundedCorner from "./RoundedCorner";
 
 const Story = () => {
     const frameRef = useRef(null);
