@@ -8,6 +8,31 @@ body {
   font-family: "General Sans", sans-serif;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: #1a1a1a;
+}
+
+::-webkit-scrollbar-track-piece {
+  background-color: #2a2a2a;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #556677;
+  border-radius: 5px;
+  border: 2px solid #1a1a1a;
+  transition: background-color 0.2s ease-in-out;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #667788;
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #556677 #1a1a1a;
+}
+
 @layer base {
   @font-face {
     font-family: "circular-web";
@@ -275,4 +300,82 @@ body {
   font-family: "zentry";
   font-feature-settings: "ss01" on;
 }
- 
+
+.story-img-container {
+  position: relative;
+  height: 90vh; /* Default for mobile */
+  width: 100%;
+  filter: url("#flt_tag");
+}
+
+@media (min-width: 768px) {
+  /* Tailwind's 'md' breakpoint is typically 768px */
+  .story-img-container {
+    height: 100vh; /* md:h-dvh */
+  }
+}
+
+.story-img-mask {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%; /* size-full */
+  height: 100%; /* size-full */
+  overflow: hidden;
+  clip-path: polygon(-2% 0, 83% 21%, 83% 73%, 0% 100%);
+}
+
+@media (min-width: 768px) {
+  /* Tailwind's 'md' breakpoint is typically 768px */
+  .story-img-mask {
+    left: 20%; /* md:left-[20%] */
+    top: -11.5%; /* md:top-[-10%] */
+    width: 80%; /* md:size-4/5 (4/5 = 80%) */
+    height: 80%; /* md:size-4/5 (4/5 = 80%) */
+  }
+}
+
+
+.gallery-img-container {
+  width: 16rem; /* size-64 (16 * 16px = 256px) */
+  height: 16rem; /* size-64 */
+  overflow: hidden;
+  background-color: #d1c4e9; /* bg-violet-300 */
+}
+
+.gallery-img {
+  width: 100%; /* size-full */
+  height: 100%; /* size-full */
+  background-size: cover; /* bg-cover */
+}
+
+.gallery-img-4 {
+  border-radius: 0.5rem; /* rounded-lg */
+}
+
+/* Responsive styles for gallery-img-4 */
+@media (min-width: 640px) { /* Tailwind's 'sm' breakpoint */
+  .gallery-img-4 {
+    width: 20rem;  /* sm:size-80 (20 * 16px = 320px) */
+    height: 20rem; /* sm:size-80 */
+  }
+}
+
+@media (min-width: 768px) { /* Tailwind's 'md' breakpoint */
+  .gallery-img-4 {
+    height: 24rem; /* md:h-96 (24 * 16px = 384px) */
+    width: 25rem;  /* md:w-[25rem] (This is a literal value, not a Tailwind unit conversion) */
+  }
+}
+
+.sword-man-clip-path {
+  clip-path: polygon(16% 0, 89% 15%, 75% 100%, 0 97%);
+}
+
+.contact-clip-path-1 {
+  clip-path: polygon(25% 0%, 74% 0, 69% 64%, 34% 73%);
+}
+
+.contact-clip-path-2 {
+  clip-path: polygon(29% 15%, 85% 30%, 50% 100%, 10% 64%);
+}

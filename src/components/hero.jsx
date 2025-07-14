@@ -25,7 +25,7 @@ export default function Hero() {
     const ctx = gsap.context(() => {
       if (!loading) {
         gsap.set("#video-frame", {
-          clipPath: "polygon(14% 0, 72% 0, 88% 90%, 0 95%)",
+          clipPath: "polygon(0% 15%, 100% 0%, 100% 85%, 0% 100%)",
           borderRadius: "0% 0% 40% 10%",
         });
 
@@ -48,36 +48,7 @@ export default function Hero() {
     return () => ctx.revert();
   }, [loading]); // ✅ Sirf loading pe chale
 
-  // const handleMiniVideoClick = () => {
-  //   const next = nextVideoRef.current;
-  //   const current = currentVideoRef.current;
-
-  //   if (next && current) {
-  //     gsap.set(next, { visibility: "visible", scale: 0 });
-
-  //     gsap.to(next, {
-  //       transformOrigin: "center center",
-  //       scale: 1,
-  //       duration: 1,
-  //       ease: "power1.inOut",
-  //       onStart: () => next.play(),
-  //       onComplete: () => {
-  //         setCurrentIndex(upcomingVideoIndex);
-  //         gsap.set(current, { scale: 1 }); // ⭐️ This keeps it visible
-  //         gsap.set(next, { visibility: "hidden" });
-  //         ScrollTrigger.refresh();
-  //       }
-  //     });
-
-  //     gsap.to(current, {
-  //       transformOrigin: "center center",
-  //       scale: 0,
-  //       duration: 1,
-  //       ease: "power2.inOut",
-  //     });
-  //   }
-  // };
-
+ 
   const handleMiniVideoClick = () => {
     const next = nextVideoRef.current;
 
